@@ -31,7 +31,7 @@ spec:
     {{- toYaml $model.tls | nindent 4 }}
   {{- end }}
   {{- if $model.config }}
-  {{ $dot.Values.providers.default }}:
+  {{ $model.configKey | default $defaultProvider }}:
   {{- toYaml $model.config | nindent 4 }}
   {{- end }}
   {{- end }}

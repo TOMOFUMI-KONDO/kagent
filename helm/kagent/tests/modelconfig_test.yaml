@@ -78,6 +78,32 @@ tests:
       - equal:
           path: spec.model
           value: "llama3.2"
+      - equal:
+          path: spec.ollama.host
+          value: host.docker.internal:11434
+
+  - it: should override config block key via configKey
+    set:
+      providers:
+        default: myBYOLLM
+        myBYOLLM:
+          provider: OpenAI
+          configKey: openAI
+          model: "my-custom-model"
+          config:
+            baseUrl: "http://my-llm.example.com/v1"
+    asserts:
+      - equal:
+          path: spec.provider
+          value: "OpenAI"
+      - equal:
+          path: spec.model
+          value: "my-custom-model"
+      - equal:
+          path: spec.openAI.baseUrl
+          value: "http://my-llm.example.com/v1"
+      - isNull:
+          path: spec.myBYOLLM
 
   - it: should use custom model when configured
     set:
