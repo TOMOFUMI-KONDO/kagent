@@ -31,8 +31,8 @@ podAnnotations: {}
 
 # -- Additional labels to add to all Kubernetes resources
 labels: {}
-  # environment: production
-  # team: platform
+# environment: production
+# team: platform
 
 # -- Security context for all pods
 podSecurityContext:
@@ -253,10 +253,10 @@ controller:
   # Extra controller env (mapped to flags via SUBSTRATE_* / OPENSHELL_* env names).
   # OpenShell AgentHarness: set OPENSHELL_GATEWAY_URL (or leave defaults below).
   env:
-    # - name: OPENSHELL_GATEWAY_URL
-    #   value: openshell.openshell.svc.cluster.local:8080
-    # - name: OPENSHELL_INSECURE
-    #   value: "true"
+  # - name: OPENSHELL_GATEWAY_URL
+  #   value: openshell.openshell.svc.cluster.local:8080
+  # - name: OPENSHELL_INSECURE
+  #   value: "true"
 
   # Agent Substrate (OpenClaw harness runtime=substrate). Requires ate-system installed.
   # kagent generates per-harness ActorTemplates and references an existing WorkerPool.
@@ -275,17 +275,17 @@ controller:
     defaultWorkerPool:
       namespace: ""
       name: ""
-    # pauseImage: "gcr.io/gke-release/pause@sha256:bcbd57ba5653580ec647b16d8163cdd1112df3609129b01f912a8032e48265da"
-    # runscAMD64URL: "gs://gvisor/releases/nightly/2026-06-02/x86_64/runsc"
-    # runscAMD64SHA256: "efd12935f6654c91a1389710eb8dfa4d12b6b9be00db87526dc2eb584ad00119"
-    # runscARM64URL: "gs://gvisor/releases/nightly/2026-05-19/aarch64/runsc"
-    # runscARM64SHA256: "1ba2366ae2efceba166046f51a4104f9261c9cb72c6db8f5b3fe2dc57dea86b9"
-    # Example when enabled:
-    #   enabled: true
-    #   ateApiEndpoint: "dns:///api.ate-system.svc:443"
-    #   atenetRouterURL: "http://atenet-router.ate-system.svc:80"
-    #   defaultWorkerPool:
-    #     name: "kagent-default"
+      # pauseImage: "gcr.io/gke-release/pause@sha256:bcbd57ba5653580ec647b16d8163cdd1112df3609129b01f912a8032e48265da"
+      # runscAMD64URL: "gs://gvisor/releases/nightly/2026-06-02/x86_64/runsc"
+      # runscAMD64SHA256: "efd12935f6654c91a1389710eb8dfa4d12b6b9be00db87526dc2eb584ad00119"
+      # runscARM64URL: "gs://gvisor/releases/nightly/2026-05-19/aarch64/runsc"
+      # runscARM64SHA256: "1ba2366ae2efceba166046f51a4104f9261c9cb72c6db8f5b3fe2dc57dea86b9"
+      # Example when enabled:
+      #   enabled: true
+      #   ateApiEndpoint: "dns:///api.ate-system.svc:443"
+      #   atenetRouterURL: "http://atenet-router.ate-system.svc:80"
+      #   defaultWorkerPool:
+      #     name: "kagent-default"
   envFrom: []
 
   # Additional volumes on the output Deployment definition.
@@ -432,6 +432,11 @@ providers:
     apiKeySecretRef: kagent-openai
     apiKeySecretKey: OPENAI_API_KEY
     # apiKey: ""
+    # Override the key used for the provider-specific config block in
+    # ModelConfig.spec. Defaults to the provider block's name (e.g. `openAI`).
+    # Useful when running an OpenAI-compatible BYO provider under a custom
+    # block name while still emitting the CRD-recognized key (`openAI`).
+    # configKey: ""
     # Optional TLS settings for the generated ModelConfig.
     # This same block can be used under any provider.
     # tls:
